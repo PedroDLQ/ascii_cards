@@ -15,7 +15,6 @@ class TestPrintCard(unittest.TestCase):
             "│         │",
             "│       A │",
             "└─────────┘",
-            "",
         ]
 
         with patch("sys.stdout", new=StringIO()) as fake_out:
@@ -31,12 +30,42 @@ class TestPrintCard(unittest.TestCase):
             "│         │",
             "│       10│",
             "└─────────┘",
-            "",
         ]
 
         with patch("sys.stdout", new=StringIO()) as fake_out:
             cards.print_card("10", "♥")
             self.assertEqual(fake_out.getvalue().strip(), "\n".join(expected_output_10))
+
+        # Test with a "red" Joker card, which is a special case in the original function
+        expected_output_rjk = [
+            "┌─────────┐",
+            "│JK       │",
+            "│         │",
+            "│    ☆    │",
+            "│         │",
+            "│       JK│",
+            "└─────────┘",
+        ]
+
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            cards.print_card("JK", "☆")
+            self.assertEqual(fake_out.getvalue().strip(), "\n".join(expected_output_rjk))
+
+        
+        # Test with a "black" Joker card, which is a special case in the original function
+        expected_output_bjk = [
+            "┌─────────┐",
+            "│JK       │",
+            "│         │",
+            "│    ★    │",
+            "│         │",
+            "│       JK│",
+            "└─────────┘",
+        ]
+
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            cards.print_card("JK", "★")
+            self.assertEqual(fake_out.getvalue().strip(), "\n".join(expected_output_bjk))
 
 
 if __name__ == "__main__":

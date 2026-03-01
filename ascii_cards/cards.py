@@ -3,14 +3,14 @@ def print_card(rank, suit):
     Prints an ASCII representation of a single playing card.
 
     Args:
-        rank (str): The rank of the card ('2'-'10', 'J', 'Q', 'K', 'A').
-        suit (str): The suit of the card ('♠', '♥', '♦', '♣').
+        rank (str): The rank of the card ('2'-'10', 'J', 'Q', 'K', 'A', 'JK').
+        suit (str): The suit of the card ('♠', '♥', '♦', '♣', '★', '☆').
     """
     top = "┌─────────┐"
     bottom = "└─────────┘"
     side = "│         │"
 
-    if rank == "10":  # Ten is the only rank with two digits
+    if rank == "10" or rank == "JK":  # Ten and Joker are the only ranks with two digits/letters
         rank_right = rank
         rank_left = rank
     else:
@@ -31,7 +31,7 @@ def print_card(rank, suit):
 
 
 def main():
-    cards = [("A", "♠"), ("10", "♥"), ("K", "♦"), ("7", "♣")]
+    cards = [("A", "♠"), ("10", "♥"), ("K", "♦"), ("7", "♣"), ("JK", "☆"), ("JK", "★")]
     for rank, suit in cards:
         print_card(rank, suit)
         print()  # Add a space between cards
