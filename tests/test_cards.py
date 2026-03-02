@@ -68,5 +68,20 @@ class TestPrintCard(unittest.TestCase):
             self.assertEqual(fake_out.getvalue().strip(), "\n".join(expected_output_bjk))
 
 
+        # Test with a "black" Joker card, which is a special case in the original function
+        expected_output_bjk = [
+            "┌─────────┐",
+            "│ ░░░░░░░ │",
+            "│ ░░░░░░░ │",
+            "│ ░░░░░░░ │",
+            "│ ░░░░░░░ │",
+            "│ ░░░░░░░ │",
+            "└─────────┘",
+        ]
+
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            cards.print_card("4", "♣", False)
+            self.assertEqual(fake_out.getvalue().strip(), "\n".join(expected_output_bjk))
+
 if __name__ == "__main__":
     unittest.main()
