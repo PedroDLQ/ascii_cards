@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 from io import StringIO
-import cards  # Assuming that the above functions are saved in a file named 'cards.py'
+import cards # Assuming that the above functions are saved in a file named 'cards.py'
 
 
 class TestPrintCard(unittest.TestCase):
@@ -68,8 +68,8 @@ class TestPrintCard(unittest.TestCase):
             self.assertEqual(fake_out.getvalue().strip(), "\n".join(expected_output_bjk))
 
 
-        # Test with a "black" Joker card, which is a special case in the original function
-        expected_output_bjk = [
+        # Test with a face down card, which is a special case of the original function
+        expected_output_fd = [
             "┌─────────┐",
             "│ ░░░░░░░ │",
             "│ ░░░░░░░ │",
@@ -81,7 +81,40 @@ class TestPrintCard(unittest.TestCase):
 
         with patch("sys.stdout", new=StringIO()) as fake_out:
             cards.print_card("4", "♣", False)
-            self.assertEqual(fake_out.getvalue().strip(), "\n".join(expected_output_bjk))
+            self.assertEqual(fake_out.getvalue().strip(), "\n".join(expected_output_fd))
+
+
+        # Test for the get_card() function
+        expected_output_get_card = [        
+            "┌─────────┐",
+            "│ 2       │",
+            "│         │",
+            "│    ♥    │",
+            "│         │",
+            "│       2 │",
+            "└─────────┘",
+        ]
+
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            print(cards.get_card("2", "♥"))
+            self.assertEqual(fake_out.getvalue().strip(), "\n".join(expected_output_get_card))
+
+
+        # Test with a face down card, which is a special case of the get_card() function
+        expected_output_gcfd = [
+            "┌─────────┐",
+            "│ ░░░░░░░ │",
+            "│ ░░░░░░░ │",
+            "│ ░░░░░░░ │",
+            "│ ░░░░░░░ │",
+            "│ ░░░░░░░ │",
+            "└─────────┘",
+        ]
+
+        with patch("sys.stdout", new=StringIO()) as fake_out:
+            print(cards.get_card("4", "♣", False))
+            self.assertEqual(fake_out.getvalue().strip(), "\n".join(expected_output_gcfd))
+
 
 if __name__ == "__main__":
     unittest.main()
